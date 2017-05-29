@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script src="js/jquery.js"></script>
+		<script src="js/baiduTemplate.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css">
+	</head>
+	<body>
+		<div class="container">
+			<button id="btn1" class="btn btn-primary">点击出学生列表</button>
+			<table class="text-center table table-striped table-bordered table-hover">
+				<tbody>
+					<tr>
+						<td>list.name</td>
+						<td>list.age</td>
+						<td>list.tel</td>
+						<td>list.adress</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$("#btn1").on("click", function(){
+			$.ajax({
+				url:"data/data.json",
+				type:"GET",
+				dataType:"json",
+				success:function(data){
+					$("tbody").load("template/baidu.html", function(){
+						$("tbody").html(baidu.template("stuList", {list:data}))
+					})
+				}
+			})
+		})
+
+
+	</script>
+</html>

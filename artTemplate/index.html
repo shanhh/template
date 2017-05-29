@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script text="text/javascript" src="js/template-web.js"></script>
+		<script text="text/javascript" src="js/jquery.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css">
+	</head>
+	<body>
+		<!-- <h1>{{title}}</h1>
+		<ul>
+			{{each list as value index}}
+				<li>索引{{ index+1 }} : {{ value }}</li>
+			{{/each}}
+		</ul> -->
+		<div id="box1"></div>
+		<div id="box2"></div>
+		<div class="container">
+			<button id="btn1" class="btn btn-primary">点击出学生列表</button>
+			<table class="text-center table table-striped table-bordered table-hover">
+				<tbody>
+					<tr>
+						<td>list.name</td>
+						<td>list.age</td>
+						<td>list.tel</td>
+						<td>list.adress</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script type="text/html" id="test1">
+		<h1>{{title}}</h1>
+		<ul>
+			{{each list}}
+				<li>索引{{ $index+1 }} : {{ $value }}</li>
+			{{/each}}
+		</ul>
+	</script>
+
+	<script type="text/html" id="test2">
+		<h1><%= title %></h1>
+		<ul>
+			<%for(var i in list){%>
+				<li><%= i %>.<%= list[i]%></li>
+			<%}%>
+		</ul>
+	</script>
+	<script type="text/javascript">
+		var data ={
+			title:"标签",
+			list:["文艺", "博客", "摄影", "电影", "民谣", "旅行", "吉他"]
+		};
+		// 简介语法
+		var html = template("test1", data);
+		document.getElementById("box1").innerHTML = html;
+		// 原始语法
+		var html2 = template("test2", data);
+		document.getElementById("box2").innerHTML = html2;
+
+		$("#btn1").on("click", function(){
+			$.ajax({
+				url:"data/data.json",
+				dataType:"json",
+				type:"GET",
+				success:function(data){
+					$("tbody").load("templates/stu.html", function(){
+						$("tbody").html(template("test3", {list : data}));
+					})
+				}
+			})
+		})
+	</script>
+</html>
